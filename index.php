@@ -17,9 +17,7 @@
       }
 
       public function getFormattedPhone(): string {
-          $phone = preg_replace('/[^0-9]/', '', $this->phone); // remove non-numeric characters
-          $formatted = '';
-          $formatted = preg_replace("/(\\d{1})(\\d{3}|\\d{4})(\\d{3}|\\d{4})(\\d{2})(\\d{2})$/i", "+ $1 ($2) $3 $4 $5 $6", $this->phone);
+          $formatted = preg_replace('/^(\d{3})(\d{2})(\d{3})(\d{2})(\d{2})$/', '+$1 ($2) $3-$4-$5', $this->phone);
 
 
           return $formatted;
@@ -41,7 +39,7 @@
           $email = $this->data->email;
           $color = $this->color->value;
 
-          $phone_link = 'tel:+' . preg_replace('/[^0-9]/', '', $this->data->phone);
+          $phone_link = 'tel:+' . $this->data->phone;
           $email_link = 'mailto:' . $this->data->email;
 
 
@@ -59,11 +57,11 @@
   }
 
   // Example usage
-  $signature_data1 = new SignatureData('Фамилия И.О.', '+375 (29) 503-81-83', 'demo@bx-shef.by');
+  $signature_data1 = new SignatureData('Фамилия И.О.', '375295038183', 'demo@bx-shef.by');
   $signature_generator1 = new SignatureGenerator($signature_data1, SignatureColor::Red);
   $signature1 = $signature_generator1->generate();
 
-  $signature_data2 = new SignatureData('Фамилия И.О.', '+375 (29) 503-81-84', 'demo2@bx-shef.by');
+  $signature_data2 = new SignatureData('Фамилия И.О.', '375295038184', 'demo2@bx-shef.by');
   $signature_generator2 = new SignatureGenerator($signature_data2, SignatureColor::Green);
   $signature2 = $signature_generator2->generate();
 
